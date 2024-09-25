@@ -63,7 +63,15 @@ class ProduitController extends Controller
      */
     public function update(UpdateProduitRequest $request, Produit $produit)
     {
-        //
+        $produit = new Produit();
+        $produit->nom = $request->nom;
+        $produit->description = $request->description;
+        $produit->image = $request->image;
+        $produit->prix = $request->prix;
+        $produit->professionnel_id = $request->professionnel_id;
+        $produit->categorie_id = $request->categorie_id;
+        $produit->update();
+        return response()->json($produit);
     }
 
     /**
