@@ -60,7 +60,14 @@ class PrestationController extends Controller
      */
     public function update(UpdatePrestationRequest $request, Prestation $prestation)
     {
-        //
+        $prestation = new prestation();
+        $prestation->libelle = $request->libelle;
+        $prestation->description = $request->description;
+        $prestation->prix = $request->prix;
+        $prestation->duree = $request->duree;
+        $prestation->categorie_id = $request->categorie_id;
+        $prestation->update();
+        return response()->json($prestation);
     }
 
     /**
