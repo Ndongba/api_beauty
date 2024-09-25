@@ -47,7 +47,7 @@ class ProduitController extends Controller
      */
     public function show(Produit $produit)
     {
-        //
+        return response()->json($produit);
     }
 
     /**
