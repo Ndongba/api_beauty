@@ -31,3 +31,4 @@ Route::delete('/produits/{id}', [ProduitController::class, "destroy"]);
 
 //ROUTE POUR LE SPRESTATIONS
 Route::get('/prestations', [PrestationController::class, "index"]);
+Route::post('/prestations', [PrestationController::class, "store"]);
