@@ -29,7 +29,14 @@ class PrestationController extends Controller
      */
     public function store(StorePrestationRequest $request)
     {
-        //
+        $prestation = new prestation();
+            $prestation->libelle = $request->libelle;
+            $prestation->description = $request->description;
+            $prestation->prix = $request->prix;
+            $prestation->duree = $request->duree;
+            $prestation->categorie_id = $request->categorie_id;
+            $prestation->save();
+            return response()->json($prestation);
     }
 
     /**
