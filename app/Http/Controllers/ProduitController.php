@@ -29,7 +29,17 @@ class ProduitController extends Controller
      */
     public function store(StoreProduitRequest $request)
     {
-        //
+
+            $produit = new Produit();
+            $produit->nom = $request->nom;
+            $produit->description = $request->description;
+            $produit->image = $request->image;
+            $produit->prix = $request->prix;
+            $produit->professionnel_id = $request->professionnel_id;
+            $produit->categorie_id = $request->categorie_id;
+            $produit->save();
+            return response()->json($produit);
+
     }
 
     /**
@@ -59,7 +69,7 @@ class ProduitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produit $produit)
+    public function destroy(Produit $produit, $id)
     {
         //
     }
