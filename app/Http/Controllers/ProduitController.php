@@ -79,6 +79,19 @@ class ProduitController extends Controller
      */
     public function destroy(Produit $produit, $id)
     {
-        //
+         // Trouver la catégorie par ID
+    $produit = produit::find($id);
+
+    // Vérifier si la catégorie existe
+    if (!$produit) {
+        return response()->json(['message' => 'produit not found'], 404);
+    }
+
+    // Supprimer la catégorie
+    $produit->delete();
+
+    // Retourner une réponse de succès
+    return response()->json(['message' => 'produit deleted successfully']);
+
     }
 }
