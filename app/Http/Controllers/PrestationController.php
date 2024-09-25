@@ -13,7 +13,7 @@ class PrestationController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Prestation::all());
     }
 
     /**
