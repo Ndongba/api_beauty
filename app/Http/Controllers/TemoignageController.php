@@ -13,7 +13,7 @@ class TemoignageController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Temoignage::all());
     }
 
     /**
@@ -29,7 +29,12 @@ class TemoignageController extends Controller
      */
     public function store(StoreTemoignageRequest $request)
     {
-        //
+        $temoignage = new temoignage();
+        $temoignage->titre = $request->titre;
+        $temoignage->contenu = $request->contenu;
+        $temoignage->client_id = $request->client_id;
+        $temoignage->save();
+        return response()->json($temoignage);
     }
 
     /**
@@ -37,7 +42,7 @@ class TemoignageController extends Controller
      */
     public function show(Temoignage $temoignage)
     {
-        //
+        return response()->json($temoignage);
     }
 
     /**
@@ -53,14 +58,31 @@ class TemoignageController extends Controller
      */
     public function update(UpdateTemoignageRequest $request, Temoignage $temoignage)
     {
-        //
+        $temoignage = new temoignage();
+        $temoignage->titre = $request->titre;
+        $temoignage->contenu = $request->contenu;
+        $temoignage->client_id = $request->client_id;
+        $temoignage->update();
+        return response()->json($temoignage);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Temoignage $temoignage)
+    public function destroy(Temoignage $temoignage,$id)
     {
-        //
+         // Trouver la catégorie par ID
+    $temoignage = temoignage::find($id);
+
+    // Vérifier si la catégorie existe
+    if (!$temoignage) {
+        return response()->json(['message' => 'temoignage not found'], 404);
+    }
+
+    // Supprimer la catégorie
+    $temoignage->delete();
+
+    // Retourner une réponse de succès
+    return response()->json(['message' => 'temoignage deleted successfully']);
     }
 }
