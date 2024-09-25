@@ -44,7 +44,7 @@ class PrestationController extends Controller
      */
     public function show(Prestation $prestation)
     {
-        //
+        return response()->json($prestation);
     }
 
     /**
@@ -73,8 +73,21 @@ class PrestationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prestation $prestation)
+    public function destroy(Prestation $prestation,$id)
     {
-        //
+          // Trouver la catégorie par ID
+    $prestation = prestation::find($id);
+
+    // Vérifier si la catégorie existe
+    if (!$prestation) {
+        return response()->json(['message' => 'prestation not found'], 404);
+    }
+
+    // Supprimer la catégorie
+    $prestation->delete();
+
+    // Retourner une réponse de succès
+    return response()->json(['message' => 'prestation deleted successfully']);
+
     }
 }
