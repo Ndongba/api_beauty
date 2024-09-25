@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\TemoignageController;
 use App\Models\Categorie;
 use App\Models\Prestation;
 use Illuminate\Http\Request;
@@ -35,3 +36,10 @@ Route::post('/prestations', [PrestationController::class, "store"]);
 Route::get('/prestations/{prestation}', [PrestationController::class, "show"]);
 Route::put('/prestations/{id}', [PrestationController::class, "update"]);
 Route::delete('/prestations/{id}', [PrestationController::class, "destroy"]);
+
+//ROUTE POUR LES TEMOIGNAGES
+Route::get('/temoignages', [TemoignageController::class, "index"]);
+Route::post('/temoignages', [TemoignageController::class, "store"]);
+Route::put('/temoignages/{id}', [TemoignageController::class, "update"]);
+Route::delete('/temoignages/{id}', [TemoignageController::class, "destroy"]);
+Route::get('/temoignages/{temoignage}', [TemoignageController::class, "show"]);
