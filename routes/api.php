@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\ProduitController;
 use App\Models\Categorie;
+use App\Models\Prestation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +29,5 @@ Route::get('/produits/{produit}', [ProduitController::class, "show"]);
 Route::put('/produits/{id}', [ProduitController::class, "update"]);
 Route::delete('/produits/{id}', [ProduitController::class, "destroy"]);
 
+//ROUTE POUR LE SPRESTATIONS
+Route::get('/prestations', [PrestationController::class, "index"]);
