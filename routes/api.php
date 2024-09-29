@@ -73,4 +73,5 @@ Route::delete('proprestations/{proprestation}', [ProprestationController::class,
 
 //ROUTE POUR LES RESERVATIONS
 Route::get('/reservations', [ReservationController::class, 'index']);
-Route::post('/reservations', [ReservationController::class, "store"]);
+Route::post('/reservations', [ReservationController::class, 'store']);
+Route::post('/reservations/{id}', [ReservationController::class, 'update'])->name('reservation.update');
