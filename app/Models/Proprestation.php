@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -17,13 +18,17 @@ class Proprestation extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class, 'reservation','client_id','proprestation_id')
+        return $this->belongsToMany(Client::class, 'reservations')
                     ->using(Reservation::class)
-                    ->withPivot('date_prevue')
-                    ->withPivot('heure_prevue')
-                    ->withPivot('montant')
-                    ->withPivot('status')
-                    ->withPivot('timestamps');
-
+                    ->withPivot('date_prévue', 'heure_prévue', 'montant', 'status')
+                    ->withTimestamps();
     }
+
+
+    /**
+     * Relation many-to-many avec Client via Reservation.
+     */
+
 }
+
+

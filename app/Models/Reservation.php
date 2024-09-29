@@ -2,30 +2,35 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Reservation extends Model
+class Reservation extends Pivot
 {
-    use HasFactory,HasApiTokens, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table= 'reservations';
+    protected $table = 'reservations';
 
     protected $guarded = [];
 
-
-    public function clients()
+    /**
+     * Relation : La réservation appartient à un client.
+     */
+    public function client()
     {
-        return $this->belongsToMany(Client::class, 'reservation','client_id','proprestation_id')
-                    ->using(Reservation::class)
-                    ->withPivot('date_prevue')
-                    ->withPivot('heure_prevue')
-                    ->withPivot('montant')
-                    ->withPivot('status')
-                    ->withPivot('timestamps');
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 
+    /**
+     * Relation : La réservation est liée à une prestation.
+     */
+    public function proprestation()
+    {
+        return $this->belongsTo(Proprestation::class, 'proprestation_id');
     }
 }
+
+
 
