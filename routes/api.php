@@ -75,3 +75,4 @@ Route::delete('proprestations/{proprestation}', [ProprestationController::class,
 Route::get('/reservations', [ReservationController::class, 'index']);
 Route::post('/reservations', [ReservationController::class, 'store']);
 Route::post('/reservations/{id}', [ReservationController::class, 'update'])->name('reservation.update');
+Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);

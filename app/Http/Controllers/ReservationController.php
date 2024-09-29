@@ -56,7 +56,7 @@ class ReservationController extends Controller
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     { $reservation = new Reservation();
 
-        $reservation->update();
+        $reservation->update($request->validated());
         return response()->json($reservation);
     }
 
@@ -65,6 +65,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        $reservation->delete();
+        return response()->json(['message' => 'Reservation deleted successfully']);
     }
 }
