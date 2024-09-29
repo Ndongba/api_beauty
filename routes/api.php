@@ -11,6 +11,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\ProprestationController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TemoignageController;
 
 Route::get('/user', function (Request $request) {
@@ -68,3 +69,8 @@ Route::get('/proprestations', [ProprestationController::class, "index"]);
 Route::post('/proprestations', [ProprestationController::class, "store"]);
 Route::put('/proprestations/{id}', [ProprestationController::class, "update"]);
 Route::delete('proprestations/{proprestation}', [ProprestationController::class, 'destroy']);
+
+
+//ROUTE POUR LES RESERVATIONS
+Route::get('/reservations', [ReservationController::class, 'index']);
+Route::post('/reservations', [ReservationController::class, "store"]);

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
+use App\Models\Proprestation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,14 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "date_prévue" => $this->faker->date,
+            "heure_prévue" => $this->faker->time(),
+            "montant" => $this->faker->randomFloat(2, 10, 100),
+            "status" => $this->faker->randomElement(['reservé', 'terminé']),
+            "client_id" => Client::factory(),
+            "proprestation_id" => Proprestation::factory(),
+
         ];
     }
 }
+

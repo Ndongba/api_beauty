@@ -13,7 +13,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Reservation::all());
     }
 
     /**
@@ -29,7 +29,9 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        //
+        $reservation = Reservation::create($request->validated());
+
+        return response()->json($reservation, 201);
     }
 
     /**
