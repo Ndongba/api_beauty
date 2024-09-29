@@ -54,8 +54,10 @@ class ReservationController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-        //
+    { $reservation = new Reservation();
+
+        $reservation->update();
+        return response()->json($reservation);
     }
 
     /**
