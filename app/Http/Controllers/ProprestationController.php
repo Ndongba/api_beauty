@@ -63,7 +63,7 @@ class ProprestationController extends Controller
             $proprestation->update($request->validated());
 
             return response()->json($proprestation);
-        
+
 
     }
 
@@ -72,6 +72,8 @@ class ProprestationController extends Controller
      */
     public function destroy(Proprestation $proprestation)
     {
-        //
+        $proprestation->delete();
+        return response()->json(['message' => 'Proprestation deleted successfully']);
     }
+
 }
