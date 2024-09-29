@@ -22,12 +22,12 @@ class StoreProduitRequest extends FormRequest
     public function rules(): array
     {
         return [
-        //     'nom' => 'required|string|max:255',
-        //     'description' => 'required|string|max:1500', // Utilisez 'string' pour le texte long
-        //     'image' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'prix' => 'required|numeric|min:0|max:999999.99', // Utilisez 'numeric' pour les prix
-        //     'professionnel_id' => 'required|integer|exists:professionnels,id', // Optionnel: vérifier si l'ID existe
-        //     'categorie_id' => 'required|integer|exists:categories,id' // Optionnel: vérifier si l'ID existe
+            'nom' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string|max:1000',
+            'image' => 'nullable|string|max:255', // Ou utilisez 'file|image' si c'est une image
+            'prix' => 'sometimes|required|numeric|min:0',
+            'professionnel_id' => 'sometimes|required|exists:professionnels,id',
+            'categorie_id' => 'sometimes|required|exists:categories,id',
          ];
     }
 }

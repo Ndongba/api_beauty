@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Models\Proprestation;
 use App\Models\User;
-use App\Models\proprestation;
 use Illuminate\Auth\Access\Response;
 
 class ProprestationPolicy
@@ -19,7 +19,7 @@ class ProprestationPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, proprestation $proprestation): bool
+    public function view(User $user, Proprestation $proprestation): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class ProprestationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, proprestation $proprestation): bool
+    public function update(User $user, Proprestation $proprestation): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class ProprestationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, proprestation $proprestation): bool
+    public function delete(User $user, Proprestation $proprestation): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class ProprestationPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, proprestation $proprestation): bool
+    public function restore(User $user, Proprestation $proprestation): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class ProprestationPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, proprestation $proprestation): bool
+    public function forceDelete(User $user, Proprestation $proprestation): bool
     {
         //
     }

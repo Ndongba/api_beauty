@@ -22,7 +22,8 @@ class UpdateCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'libelle' => 'sometimes|required|string|max:255|unique:categories,libelle,' . $this->id,
+            'description' => 'sometimes|required|string|max:1000',
         ];
     }
 }

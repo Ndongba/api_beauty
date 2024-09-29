@@ -14,4 +14,18 @@ class Reservation extends Model
     protected $table= 'reservations';
 
     protected $guarded = [];
+
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'reservation','client_id','proprestation_id')
+                    ->using(Reservation::class)
+                    ->withPivot('date_prevue')
+                    ->withPivot('heure_prevue')
+                    ->withPivot('montant')
+                    ->withPivot('status')
+                    ->withPivot('timestamps');
+
+    }
 }
+

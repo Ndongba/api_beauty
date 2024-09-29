@@ -22,7 +22,8 @@ class StoreCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'libelle' => 'required|string|max:255|unique:categories,libelle',
+            'description' => 'required|string|max:1000',
         ];
     }
 }

@@ -42,4 +42,8 @@ class Client extends Model
                     ->withPivot('timestamps');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

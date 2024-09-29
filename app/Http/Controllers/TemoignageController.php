@@ -17,24 +17,14 @@ class TemoignageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTemoignageRequest $request)
     {
-        $temoignage = new temoignage();
-        $temoignage->titre = $request->titre;
-        $temoignage->contenu = $request->contenu;
-        $temoignage->client_id = $request->client_id;
-        $temoignage->save();
-        return response()->json($temoignage);
+        // Créer un témoignage avec les données validées
+        $temoignage = Temoignage::create($request->validated());
+
+        return response()->json($temoignage, 201);
     }
 
     /**
@@ -46,43 +36,23 @@ class TemoignageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Temoignage $temoignage)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTemoignageRequest $request, Temoignage $temoignage)
     {
-        $temoignage = new temoignage();
-        $temoignage->titre = $request->titre;
-        $temoignage->contenu = $request->contenu;
-        $temoignage->client_id = $request->client_id;
-        $temoignage->update();
+        // Mettre à jour l'instance de témoignage existante avec les données validées
+        $temoignage->update($request->validated());
+
         return response()->json($temoignage);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Temoignage $temoignage,$id)
+    public function destroy(Temoignage $temoignage)
     {
-         // Trouver la catégorie par ID
-    $temoignage = temoignage::find($id);
+        $temoignage->delete();
 
-    // Vérifier si la catégorie existe
-    if (!$temoignage) {
-        return response()->json(['message' => 'temoignage not found'], 404);
-    }
-
-    // Supprimer la catégorie
-    $temoignage->delete();
-
-    // Retourner une réponse de succès
-    return response()->json(['message' => 'temoignage deleted successfully']);
+        return response()->json(['message' => 'Temoignage deleted successfully']);
     }
 }

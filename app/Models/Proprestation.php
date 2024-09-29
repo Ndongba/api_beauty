@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class proprestation extends Model
+class Proprestation extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable;
+   use HasFactory, HasApiTokens, Notifiable;
 
     protected $table = 'proprestations';
 
     protected $guarded = [];
 
-     public function clients()
+    public function clients()
     {
         return $this->belongsToMany(Client::class, 'reservation','client_id','proprestation_id')
                     ->using(Reservation::class)
