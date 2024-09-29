@@ -17,13 +17,11 @@ class Proprestation extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class, 'reservation','client_id','proprestation_id')
-                    ->using(Reservation::class)
-                    ->withPivot('date_prevue')
-                    ->withPivot('heure_prevue')
-                    ->withPivot('montant')
-                    ->withPivot('status')
-                    ->withPivot('timestamps');
+        return $this->belongsToMany(Client::class, 'reservation', 'client_id', 'proprestation_id')
+            ->using(Reservation::class)
+            ->withPivot('date_prevue', 'heure_prevue', 'montant', 'status')
+            ->withTimestamps(); // Remplace `withPivot('timestamps')` par `withTimestamps()`
+
 
     }
 }

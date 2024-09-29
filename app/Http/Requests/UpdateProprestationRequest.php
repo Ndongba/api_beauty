@@ -22,8 +22,8 @@ class UpdateProprestationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'professionnel_id' => 'sometimes|required|exists:professionnels,id',
-            'prestation_id' => 'sometimes|required|exists:prestations,id',
+            'professionnel_id' => 'required|integer|exists:professionnels,id',
+            'prestation_id' => 'required|integer|exists:prestations,id',
         ];
     }
 }
