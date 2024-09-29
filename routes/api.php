@@ -67,3 +67,4 @@ Route::get('/commandes/{commande}', [CommandeController::class, "show"]);
 Route::get('/proprestations', [ProprestationController::class, "index"]);
 Route::post('/proprestations', [ProprestationController::class, "store"]);
 Route::put('/proprestations/{id}', [ProprestationController::class, "update"]);
+Route::delete('proprestations/{proprestation}', [ProprestationController::class, 'destroy']);
