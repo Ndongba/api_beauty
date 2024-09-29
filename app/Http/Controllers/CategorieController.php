@@ -5,84 +5,61 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
 use App\Models\Categorie;
+use Illuminate\Http\JsonResponse;
 
 class CategorieController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json(Categorie::all());
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategorieRequest $request)
+    public function store(StoreCategorieRequest $request): JsonResponse
     {
-        $categorie = new Categorie();
-        $categorie->libelle = $request->libelle;
-        $categorie->description = $request->description;
-        $categorie->save();
-        return response()->json($categorie);
+        $categorie = Categorie::create($request->validated());
+
+        return response()->json($categorie, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Categorie $categorie)
+    public function show($id): JsonResponse
     {
-        //
-    }
+        $categorie = Categorie::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categorie $categorie)
-    {
-        //
+        if (!$categorie) {
+            return response()->json(['message' => 'Categorie not found'], 404);
+        }
+
+        return response()->json($categorie);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategorieRequest $request, Categorie $categorie)
-    {
-        $categorie = new Categorie();
-        $categorie->libelle = $request->libelle;
-        $categorie->description = $request->description;
-        $categorie->update();
-        return response()->json($categorie);
-    }
+    public function update(UpdateCategorieRequest $request, Categorie $categorie): JsonResponse
+{
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categorie $categorie, $id)
-    {
 
-     // Trouver la catégorie par ID
-    $categorie = Categorie::find($id);
+    $categorie->update($request->validated());
 
-    // Vérifier si la catégorie existe
-    if (!$categorie) {
-        return response()->json(['message' => 'Categorie not found'], 404);
-    }
+    return response()->json($categorie);
+}
 
-    // Supprimer la catégorie
+public function destroy($id): JsonResponse
+{
+    $categorie = Categorie::findOrFail($id);
+
     $categorie->delete();
 
-    // Retourner une réponse de succès
     return response()->json(['message' => 'Categorie deleted successfully']);
+}
 
-    }
 }

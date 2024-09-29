@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Proprestation;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProprestationSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class ProprestationSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Proprestation::factory()->count(20)->create();
     }
 }

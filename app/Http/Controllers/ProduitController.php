@@ -17,29 +17,14 @@ class ProduitController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreProduitRequest $request)
     {
+        // Créer un nouveau produit avec les données validées
+        $produit = Produit::create($request->validated());
 
-            $produit = new Produit();
-            $produit->nom = $request->nom;
-            $produit->description = $request->description;
-            $produit->image = $request->image;
-            $produit->prix = $request->prix;
-            $produit->professionnel_id = $request->professionnel_id;
-            $produit->categorie_id = $request->categorie_id;
-            $produit->save();
-            return response()->json($produit);
-
+        return response()->json($produit, 201);
     }
 
     /**
@@ -51,47 +36,24 @@ class ProduitController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Produit $produit)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateProduitRequest $request, Produit $produit)
     {
-        $produit = new Produit();
-        $produit->nom = $request->nom;
-        $produit->description = $request->description;
-        $produit->image = $request->image;
-        $produit->prix = $request->prix;
-        $produit->professionnel_id = $request->professionnel_id;
-        $produit->categorie_id = $request->categorie_id;
-        $produit->update();
+        // Mettre à jour le produit existant avec les nouvelles données validées
+        $produit->update($request->validated());
+
         return response()->json($produit);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produit $produit, $id)
+    public function destroy(Produit $produit)
     {
-         // Trouver la catégorie par ID
-    $produit = produit::find($id);
+        // Supprimer le produit
+        $produit->delete();
 
-    // Vérifier si la catégorie existe
-    if (!$produit) {
-        return response()->json(['message' => 'produit not found'], 404);
-    }
-
-    // Supprimer la catégorie
-    $produit->delete();
-
-    // Retourner une réponse de succès
-    return response()->json(['message' => 'produit deleted successfully']);
-
+        return response()->json(['message' => 'Produit deleted successfully']);
     }
 }

@@ -17,26 +17,14 @@ class PrestationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StorePrestationRequest $request)
     {
-        $prestation = new prestation();
-            $prestation->libelle = $request->libelle;
-            $prestation->description = $request->description;
-            $prestation->prix = $request->prix;
-            $prestation->duree = $request->duree;
-            $prestation->categorie_id = $request->categorie_id;
-            $prestation->save();
-            return response()->json($prestation);
+        // Créer une nouvelle prestation avec les données validées
+        $prestation = Prestation::create($request->validated());
+
+        return response()->json($prestation, 201);
     }
 
     /**
@@ -48,46 +36,23 @@ class PrestationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Prestation $prestation)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePrestationRequest $request, Prestation $prestation)
     {
-        $prestation = new prestation();
-        $prestation->libelle = $request->libelle;
-        $prestation->description = $request->description;
-        $prestation->prix = $request->prix;
-        $prestation->duree = $request->duree;
-        $prestation->categorie_id = $request->categorie_id;
-        $prestation->update();
+        // Mettre à jour la prestation avec les données validées
+        $prestation->update($request->validated());
+
         return response()->json($prestation);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prestation $prestation,$id)
+    public function destroy(Prestation $prestation)
     {
-          // Trouver la catégorie par ID
-    $prestation = prestation::find($id);
+        $prestation->delete();
 
-    // Vérifier si la catégorie existe
-    if (!$prestation) {
-        return response()->json(['message' => 'prestation not found'], 404);
-    }
-
-    // Supprimer la catégorie
-    $prestation->delete();
-
-    // Retourner une réponse de succès
-    return response()->json(['message' => 'prestation deleted successfully']);
-
+        return response()->json(['message' => 'Prestation deleted successfully']);
     }
 }

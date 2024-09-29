@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreproprestationRequest;
-use App\Http\Requests\UpdateproprestationRequest;
-use App\Models\proprestation;
+use App\Http\Requests\StoreProprestationRequest;
+use App\Http\Requests\UpdateProprestationRequest;
+use App\Models\Proprestation;
 
 class ProprestationController extends Controller
 {
@@ -13,7 +13,7 @@ class ProprestationController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Proprestation::all());
     }
 
     /**
@@ -27,15 +27,18 @@ class ProprestationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreproprestationRequest $request)
+    public function store(StoreProprestationRequest $request)
     {
-        //
+         // Créer une nouvelle commande avec les données validées
+         $proprestation = Proprestation::create($request->validated());
+
+         return response()->json($proprestation, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(proprestation $proprestation)
+    public function show(Proprestation $proprestation)
     {
         //
     }
@@ -43,7 +46,7 @@ class ProprestationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(proprestation $proprestation)
+    public function edit(Proprestation $proprestation)
     {
         //
     }
@@ -51,15 +54,23 @@ class ProprestationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateproprestationRequest $request, proprestation $proprestation)
+    public function update(UpdateProprestationRequest $request, Proprestation $proprestation)
     {
-        //
+
+
+            dd($request->validated()); // Pour voir ce que la validation retourne
+
+            $proprestation->update($request->validated());
+
+            return response()->json($proprestation);
+        
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(proprestation $proprestation)
+    public function destroy(Proprestation $proprestation)
     {
         //
     }

@@ -21,6 +21,7 @@ class ProduitFactory extends Factory
         return [
             "nom" => $this->faker->word,
             "description" => $this->faker->sentence,
+            'prix' => $this->faker->randomFloat(2, 10, 100),  
             "image" => 'documents/image1.jpeg',
             "professionnel_id" => Professionnel::factory(),
             "categorie_id" => Categorie::factory(),

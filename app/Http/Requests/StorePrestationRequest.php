@@ -22,7 +22,11 @@ class StorePrestationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'libelle' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'prix' => 'required|numeric|min:0',
+            'duree' => 'required|date_format:H:i:s',
+            'categorie_id' => 'required|exists:categories,id',
         ];
     }
 }

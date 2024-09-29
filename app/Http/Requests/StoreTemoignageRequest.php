@@ -22,7 +22,9 @@ class StoreTemoignageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'titre' => 'required|string|max:255|unique:temoignages,titre',
+            'contenu' => 'required|string|max:1000',
+            'client_id' => 'required|exists:clients,id',
         ];
     }
 }

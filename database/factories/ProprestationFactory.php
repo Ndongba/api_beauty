@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Prestation;
+use App\Models\Professionnel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\proprestation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Proprestation>
  */
 class ProprestationFactory extends Factory
 {
@@ -17,7 +19,8 @@ class ProprestationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'professionnel_id' => Professionnel::factory(),
+            'prestation_id' => Prestation::factory(),
         ];
     }
 }

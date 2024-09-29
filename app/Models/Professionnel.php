@@ -24,4 +24,9 @@ class Professionnel extends Model
 
         return $this->belongsToMany(prestation::class, 'proprestation');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

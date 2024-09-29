@@ -22,7 +22,9 @@ class UpdateTemoignageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'titre' => 'sometimes|required|string|max:255|unique:temoignages,titre,' . $this->temoignage->id,
+            'contenu' => 'sometimes|required|string|max:1000',
+            'client_id' => 'sometimes|required|exists:clients,id',
         ];
     }
 }

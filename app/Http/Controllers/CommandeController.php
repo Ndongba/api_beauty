@@ -13,15 +13,7 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(Commande::all());
     }
 
     /**
@@ -29,7 +21,10 @@ class CommandeController extends Controller
      */
     public function store(StoreCommandeRequest $request)
     {
-        //
+        // Créer une nouvelle commande avec les données validées
+        $commande = Commande::create($request->validated());
+
+        return response()->json($commande, 201);
     }
 
     /**
@@ -37,15 +32,7 @@ class CommandeController extends Controller
      */
     public function show(Commande $commande)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Commande $commande)
-    {
-        //
+        return response()->json($commande);
     }
 
     /**
@@ -53,7 +40,10 @@ class CommandeController extends Controller
      */
     public function update(UpdateCommandeRequest $request, Commande $commande)
     {
-        //
+        // Mettre à jour la commande avec les nouvelles données validées
+        $commande->update($request->validated());
+
+        return response()->json($commande);
     }
 
     /**
@@ -61,6 +51,8 @@ class CommandeController extends Controller
      */
     public function destroy(Commande $commande)
     {
-        //
+        $commande->delete();
+
+        return response()->json(['message' => 'Commande deleted successfully']);
     }
 }
