@@ -51,7 +51,6 @@ class ProduitController extends Controller
      */
     public function destroy(Produit $produit)
     {
-        // Supprimer le produit
         $produit->delete();
 
         return response()->json(['message' => 'Produit deleted successfully']);

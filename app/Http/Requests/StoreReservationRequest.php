@@ -24,7 +24,7 @@ class StoreReservationRequest extends FormRequest
         return [
             'date_prévue' => 'required|date|after_or_equal:today',  // La date doit être valide et au minimum la date du jour
             'heure_prévue' => 'required|date_format:H:i',            // Valide les heures au format 24h (ex: 14:30)
-            'montant' => 'nullable|numeric|min:0',                   // Montant optionnel mais doit être >= 0 s'il est présent
+            'montant' => 'required|numeric|min:0',                   // Montant optionnel mais doit être >= 0 s'il est présent
             'status' => 'required|in:reservé,terminé',                // Seules les valeurs 'reservé' et 'terminé' sont acceptées
             'client_id' => 'required|integer|exists:clients,id',      // ID du client doit exister dans la table clients
             'proprestation_id' => 'required|integer|exists:proprestations,id' // ID de la prestation doit exister dans la table proprestations
