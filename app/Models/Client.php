@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Reservation as GlobalReservation;
+use Spatie\Permission\Traits\HasRoles;
 
 class Client extends Model
 {
-    use HasFactory,HasApiTokens, Notifiable;
+    use HasFactory,HasApiTokens, Notifiable, HasRoles;
 
     protected $guarded = [];
 

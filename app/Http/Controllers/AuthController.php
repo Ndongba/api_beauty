@@ -61,4 +61,23 @@ class AuthController extends Controller
     {
         return response()->json(Auth::user());
     }
+
+    public function someAction(Request $request)
+{
+    $user = $request->user();
+
+    // Vérifier si l'utilisateur a un rôle particulier
+    if ($user->hasRole('admin')) {
+        return response()->json(['message' => 'Welcome, admin!']);
+    }
+
+    // Vérifier si l'utilisateur a une permission particulière
+    if ($user->can('manage clients')) {
+        return response()->json(['message' => 'You can manage clients!']);
+    }
+
+    return response()->json(['message' => 'Unauthorized'], 403);
+}
+
+
 }
