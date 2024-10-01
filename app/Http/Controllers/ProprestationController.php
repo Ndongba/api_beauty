@@ -58,7 +58,11 @@ class ProprestationController extends Controller
     {
 
 
+<<<<<<< HEAD
             
+=======
+          
+>>>>>>> feature/refactoring
 
             $proprestation->update($request->validated());
 

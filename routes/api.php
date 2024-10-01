@@ -51,25 +51,25 @@ Route::get('/me', [AuthController::class, 'me']);
     Route::put('/prestations/{id}', [PrestationController::class, "update"]);
     Route::delete('/prestations/{id}', [PrestationController::class, "destroy"]);
 
-
     //ROUTE POUR PRODUITS
     Route::get('/produits', [ProduitController::class, "index"]);
     Route::post('/produits', [ProduitController::class, "store"]);
     Route::get('/produits/{produit}', [ProduitController::class, "show"]);
     Route::put('/produits/{id}', [ProduitController::class, "update"]);
     Route::delete('/produits/{id}', [ProduitController::class, "destroy"]);
+//ROUTE POUR CATEGORIES
+Route::get('/categories', [CategorieController::class, 'index']);
+Route::post('/categories', [CategorieController::class, 'store']);
+Route::put('/categories/{categorie}', [CategorieController::class, 'update'])->name('categorie.update');
+Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy']);
 
-    //ROUTE POUR CATEGORIES
-    Route::get('/categories', [CategorieController::class, "index"]);
-    Route::post('/categories', [CategorieController::class, "store"]);
-    Route::put('/categories/{id}', [CategorieController::class, "update"]);
-    Route::delete('/categories/{id}', [CategorieController::class, "destroy"]);
  });
 
 // // Routes accessibles uniquement pour les clients
  Route::middleware(['auth:api' ,'role:client'])->group(function () {
      Route::get('/reservations', [ReservationController::class, 'index']);
      Route::post('/reservations/store', [ReservationController::class, 'store']);
+
 
      //ROUTE POUR LES COMMANDES
     Route::get('/commandes', [CommandeController::class, "index"]);
@@ -91,3 +91,19 @@ Route::get('/me', [AuthController::class, 'me']);
     Route::delete('/temoignages/{id}', [TemoignageController::class, "destroy"]);
     Route::get('/temoignages/{temoignage}', [TemoignageController::class, "show"]);
  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
