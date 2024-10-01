@@ -58,7 +58,7 @@ class ProprestationController extends Controller
     {
 
 
-            dd($request->validated()); // Pour voir ce que la validation retourne
+            
 
             $proprestation->update($request->validated());
 
