@@ -50,7 +50,7 @@ class CategorieController extends Controller
 
     $categorie->update($request->validated());
 
-    return response()->json($categorie);
+    return response()->json($categorie,201);
 }
 
 public function destroy($id): JsonResponse
