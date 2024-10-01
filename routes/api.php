@@ -29,7 +29,7 @@ Route::get('/me', [AuthController::class, 'me']);
 //ROUTE POUR CATEGORIES
 Route::get('/categories', [CategorieController::class, 'index']);
 Route::post('/categories', [CategorieController::class, 'store']);
-Route::put('/categories/{categorie}', [CategorieController::class, 'update']);
+Route::put('/categories/{categorie}', [CategorieController::class, 'update'])->name('categorie.update');
 Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy']);
 
 
