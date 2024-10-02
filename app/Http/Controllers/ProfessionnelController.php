@@ -35,9 +35,10 @@ class ProfessionnelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Professionnel $professionnel)
+    public function show(Professionnel $professionnel , $id)
     {
-        //
+        $etablissement = Professionnel::with('images')->findOrFail($id);
+        return response()->json($etablissement);
     }
 
     /**

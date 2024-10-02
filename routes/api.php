@@ -6,20 +6,26 @@ use App\Models\Prestation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PrestationController;
-use App\Http\Controllers\ProprestationController;
-use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TemoignageController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ImageProduitController;
+use App\Http\Controllers\ProprestationController;
+use App\Http\Controllers\ImageProfessionnelController;
 
 
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+
+
+Route::apiResource('images-produits', ImageProduitController::class);
+Route::apiResource('images-professionnels', ImageProfessionnelController::class);
 
 // ROUTE POUR L'AUTHENTIFICATION
 Route::post('/register', [AuthController::class, 'register']);
