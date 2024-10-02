@@ -32,4 +32,9 @@ class Produit extends Model
                     ->withPivot('quantite')
                     ->withTimestamps();
     }
+
+    public function images()
+    {
+        return $this->hasMany(ImageProduit::class, 'produit_id');
+    }
 }
