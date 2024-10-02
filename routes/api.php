@@ -24,8 +24,7 @@ use App\Http\Controllers\ImageProfessionnelController;
 // })->middleware('auth:sanctum');
 
 
-Route::apiResource('images-produits', ImageProduitController::class);
-Route::apiResource('images-professionnels', ImageProfessionnelController::class);
+
 
 // ROUTE POUR L'AUTHENTIFICATION
 Route::post('/register', [AuthController::class, 'register']);
@@ -68,6 +67,10 @@ Route::get('/categories', [CategorieController::class, 'index']);
 Route::post('/categories', [CategorieController::class, 'store']);
 Route::put('/categories/{categorie}', [CategorieController::class, 'update'])->name('categorie.update');
 Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy']);
+
+//ROUTE POUR UPLOAD IMAGES
+Route::apiResource('images-produits', ImageProduitController::class);
+Route::apiResource('images-professionnels', ImageProfessionnelController::class);
 
  });
 
