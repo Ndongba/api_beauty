@@ -35,14 +35,15 @@ Route::get('/me', [AuthController::class, 'me']);
 // // Routes accessibles uniquement pour les administrateurs
  Route::middleware(['auth:api', 'role:admin'])->group(function () {
      Route::get('/admin', [AuthController::class, 'index']);
-     Route::resource('prestations', PrestationController::class);
-
-     //ROUTE POUR LES PROPRESTATIONS
-    Route::get('/proprestations', [ProprestationController::class, "index"]);
-    Route::post('/proprestations', [ProprestationController::class, "store"]);
-    Route::put('/proprestations/{id}', [ProprestationController::class, "update"]);
-    Route::delete('proprestations/{proprestation}', [ProprestationController::class, 'destroy']);
- });
+     Route::apiResource('prestations', PrestationController::class);
+     Route::apiResource('images-produits', ImageProduitController::class);
+     Route::apiResource('proprestations', ProprestationController::class);
+     Route::apiResource('produits', ProduitController::class);
+     Route::apiResource('commandes', CommandeController::class);
+     Route::apiResource('categories', CategorieController::class);
+     Route::apiResource('reservations', ReservationController::class);
+     Route::apiResource('temoignages', TemoignageController::class);
+});
 
 // // Routes accessibles pour les professionnels
  Route::middleware(['auth:api','role:professionnel'])->group(function () {
@@ -76,9 +77,6 @@ Route::apiResource('images-professionnels', ImageProfessionnelController::class)
 
 // // Routes accessibles uniquement pour les clients
  Route::middleware(['auth:api' ,'role:client'])->group(function () {
-     Route::get('/reservations', [ReservationController::class, 'index']);
-     Route::post('/reservations/store', [ReservationController::class, 'store']);
-
 
      //ROUTE POUR LES COMMANDES
     Route::get('/commandes', [CommandeController::class, "index"]);
