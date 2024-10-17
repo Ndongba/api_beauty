@@ -21,11 +21,20 @@ class Proprestation extends Model
 
         return $this->belongsToMany(Client::class, 'reservation', 'client_id', 'proprestation_id')
             ->using(Reservation::class)
-            ->withPivot('date_prevue', 'heure_prevue', 'montant', 'status')
+            ->withPivot('date_prévue', 'heure_prévue', 'montant', 'status')
             ->withTimestamps(); // Remplace `withPivot('timestamps')` par `withTimestamps()`
 
     }
+    public function professionnel()
+    {
+        return $this->belongsTo(Professionnel::class,'professionnel_id');
+    }
 
+    //relation avec presation
+    public function prestation()
+    {
+        return $this->belongsTo(Prestation::class,'prestation_id');
+    }
 
     /**
      * Relation many-to-many avec Client via Reservation.

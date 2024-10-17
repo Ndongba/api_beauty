@@ -58,12 +58,6 @@ class ProprestationController extends Controller
     {
 
 
-<<<<<<< HEAD
-            
-=======
-          
->>>>>>> feature/refactoring
-
             $proprestation->update($request->validated());
 
             return response()->json($proprestation);

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->integer('prix');
             $table->time('duree');
+            $table->enum('type_prix', ['fixe', 'variable']);
+            $table->string('type_prestation');
             $table->unsignedBigInteger('categorie_id');
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

@@ -13,7 +13,7 @@ class Reservation extends Pivot
 
     protected $table = 'reservations';
 
-    protected $guarded = [];
+     protected $guarded = [];
 
     /**
      * Relation : La réservation appartient à un client.

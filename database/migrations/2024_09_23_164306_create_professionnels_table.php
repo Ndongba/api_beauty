@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('professionnels', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->string('registre_commerce')->nullable();
-            $table->string('ninea')->nullable();
-            $table->date('date_ouverture');
-            $table->date('date_fermeture');
-            $table->time('heure_ouverture');
-            $table->time('heure_fermeture');
+            $table->text('description')->nullable();
+            $table->text('registre_commerce');
+            $table->text('ninea');
+            $table->date('date_ouverture')->nullable();
+            $table->date('date_fermeture')->nullable();
+            $table->time('heure_ouverture')->nullable();
+            $table->time('heure_fermeture')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -9,10 +9,7 @@ class StoreProprestationRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return true;
-    }
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,8 +19,9 @@ class StoreProprestationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'professionnel_id' => 'sometimes|required|exists:professionnels,id',
-            'prestation_id' => 'sometimes|required|exists:prestations,id',
+            'professionnel_id' => 'required|exists:professionnels,id',
+            'prestation_id' => 'required|exists:prestations,id',
         ];
     }
+
 }

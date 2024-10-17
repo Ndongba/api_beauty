@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Colonne auto-increment
+            $table->string('telephone', 20); // Utilisation de string pour un numéro de téléphone (limité à 20 caractères)
+            $table->string('adresse');
+           
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
