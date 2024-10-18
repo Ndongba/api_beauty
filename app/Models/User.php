@@ -14,6 +14,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
+
+    protected $guard_name = 'web'; // or whatever guard you want to use
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +25,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'role_id'
+
     ];
 
     /**
@@ -40,13 +44,19 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    // protected function casts(): array
+    // {
+    //     return [
+    //         'email_verified_at' => 'datetime',
+    //         'password' => 'hashed',
+    //     ];
+    // }
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
 
      // Méthodes JWT pour l'authentification
      public function getJWTIdentifier()

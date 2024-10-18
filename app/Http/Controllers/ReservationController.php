@@ -2,70 +2,104 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
+use App\Models\Client;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
+use App\Models\Proprestation;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affiche la liste des réservations.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return response()->json(Reservation::all());
+        $reservations = Reservation::with(['client', 'proprestation'])->get(); // Inclut les relations
+        return response()->json($reservations);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Enregistre une nouvelle réservation.
      */
-    public function create()
+    public function store(Request $request): JsonResponse
     {
-        //
+        $client= Auth::user()->id;
+        // Validation des données entrantes
+         $validated = $request->validate(
+            [
+             //'client_id' => 'required|exists:clients,id',
+             'proprestation_id' => 'required|exists:proprestations,id',
+             'date_prévue' => 'required|date',
+             'heure_prévue' => 'required',
+             'montant' => 'required|numeric',
+             'status' => 'nullable|string',
+         ]);
+
+
+        // Crée une nouvelle réservation
+        $reservation = Reservation::create([
+            'client_id'=> $client,
+            'proprestation_id' =>$request->proprestation_id,
+            'date_prévue' => $request->date_prévue,
+            'heure_prévue' => $request->heure_prévue,
+            'montant' => $request->montant,
+            'status' => 'Reservé'
+        ]);
+
+        return response()->json($reservation, 201);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Affiche une réservation spécifique.
      */
-    public function store(StoreReservationRequest $request, Reservation $reservation)
+    public function show(Reservation $reservation): JsonResponse
     {
-        $reservation = Reservation::create($request->validated());
+        return response()->json($reservation->load(['client', 'proprestation'])); // Inclut les relations
+    }
+
+    /**
+     * Met à jour une réservation existante.
+     */
+    public function update(Request $request, $id): JsonResponse
+    {
+        // Validation des données entrantes
+        try {
+            $validated = $request->validate([
+                'client_id' => 'sometimes|exists:clients,id',
+                'proprestation_id' => 'sometimes|exists:proprestations,id',
+                'date_prévue' => 'sometimes|date',
+                'heure_prévue' => 'sometimes',
+                'montant' => 'sometimes|numeric',
+                'status' => 'nullable|string',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+
+        // Trouver la réservation par son ID
+        $reservation = Reservation::find($id);
+
+        // Vérifiez si la réservation existe
+        if (!$reservation) {
+            return response()->json(['message' => 'Réservation non trouvée'], 404);
+        }
+
+        // Mise à jour de la réservation
+        $reservation->update($validated);
 
         return response()->json($reservation);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Supprime une réservation.
      */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-
-        $reservation->update($request->validated());
-        return response()->json($reservation);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservation $reservation): JsonResponse
     {
         $reservation->delete();
-        return response()->json(['message' => 'Reservation deleted successfully']);
+
+        return response()->json(['message' => 'Réservation supprimée avec succès']);
     }
 }

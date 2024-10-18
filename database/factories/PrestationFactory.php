@@ -16,16 +16,23 @@ class PrestationFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
-        return [
-            'libelle' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'prix' => $this->faker->randomFloat(2, 10, 100), // prix avec 2 décimales entre 10 et 100
-            'duree' => Carbon::createFromTime(0, 0, 0)->format('H:i:s'), // Convertir en HH:MM:SS
-            'categorie_id' => Categorie::factory(), // génère une catégorie a
-        ];
+        // // Générer une durée aléatoire entre 30 et 120 minutes
+        // $minutes = $this->faker->numberBetween(30, 120); // Durée en minutes
+        // $hours = floor($minutes / 60);
+        // $remainingMinutes = $minutes % 60;
+
+        // return [
+        //     'libelle' => $this->faker->word,
+        //     'description' => $this->faker->sentence,
+        //     'prix' => $this->faker->randomFloat(2, 10, 100), // prix avec 2 décimales entre 10 et 100
+        //     'duree' => sprintf('%02d:%02d:%02d', $hours, $remainingMinutes, 0), // Formatage en HH:MM:SS
+        //     'categorie_id' => Categorie::factory(), // génère une catégorie
+        // ];
     }
+
+
 }
 
 

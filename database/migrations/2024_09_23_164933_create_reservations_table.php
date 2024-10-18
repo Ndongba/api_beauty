@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('montant');
             $table->enum('status',['reservé','terminé']);
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('proprestation_id');
             $table->foreign('proprestation_id')->references('id')->on('proprestations')->onDelete('cascade');
             $table->timestamps();

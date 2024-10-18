@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
-        'passwords' => 'users',
+        'guard' => env('AUTH_GUARD', 'api'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
     /*
@@ -35,20 +35,16 @@ return [
     |
     */
 
-    
+
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
-        ],
-        'client' => [
-            'driver' => 'jwt',
-            'provider' => 'clients',
-        ],
-        'professionnel' => [
-            'driver' => 'jwt',
-            'provider' => 'professionnels',
         ],
     ],
 
@@ -129,6 +125,6 @@ return [
     |
     */
 
-    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+    // 'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];

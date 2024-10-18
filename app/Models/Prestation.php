@@ -18,11 +18,18 @@ class Prestation extends Model
 
     public function categories(): BelongsTo {
 
-        return $this->belongsTo(categorie::class);
+        return $this->belongsTo(Categorie::class);
     }
 
     public function professionnels(): BelongsToMany {
 
-        return $this->belongsToMany(Professionnel::class, 'proprestation');
+        return $this->belongsToMany(Professionnel::class, 'proprestations')
+        ->withPivot('id','professionnel_id', 'prestation_id')
+        ->withTimestamps();
+
+    }
+    public function proprestation()
+    {
+        return $this->hasMany(Proprestation::class, 'prestation_id');
     }
 }

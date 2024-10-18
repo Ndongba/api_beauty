@@ -8,22 +8,30 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Permission\Traits\HasRoles;
+
 
 class Professionnel extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable, HasRoles;
+    use HasFactory, HasApiTokens, Notifiable;
+
+    protected $table = 'professionnels'; // Utiliser la table professionnels
 
     protected $guarded = [];
 
     public function produits(): HasMany {
 
-        return $this->hasMany(produit::class);
+        return $this->hasMany(Produit::class);
     }
 
     public function prestations() : BelongsToMany {
 
-        return $this->belongsToMany(prestation::class, 'proprestation');
+        return $this->belongsToMany(Prestation::class, 'proprestations')
+        ->withPivot('id','professionnel_id', 'prestation_id')
+        ->withTimestamps();
+    }
+    public function proprestation()
+    {
+        return $this->hasMany(Proprestation::class, 'professionnel_id');
     }
 
     public function user()
@@ -33,6 +41,9 @@ class Professionnel extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageProfessionnel::class, 'etablissement_id');
+        return $this->hasMany(ImageProfessionnel::class, 'professionnel_id');
     }
+
+
+
 }
