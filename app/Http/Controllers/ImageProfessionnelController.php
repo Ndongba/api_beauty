@@ -24,8 +24,9 @@ class ImageProfessionnelController extends Controller
             $path = $request->file('image')->store('professionnels', 'public');
 
             $image = ImageProfessionnel::create([
-                'professionnel_id' => $validated['profesionnel_id'],
+                'professionnel_id' => $validated['professionnel_id'],
                 'image_path' => $path
+
             ]);
 
             return response()->json($image, 201);

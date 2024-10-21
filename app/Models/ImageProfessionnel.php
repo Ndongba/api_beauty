@@ -9,10 +9,11 @@ class ImageProfessionnel extends Model
 {
     use HasFactory;
 
+    protected $table = 'images_professionnels'; // Assure-toi que le nom de la table est correct
     protected $guarded = [];
 
     public function professionnel()
     {
-        return $this->belongsTo(Professionnel::class, 'etablissement_id');
+        return $this->belongsTo(Professionnel::class, 'professionnel_id');
     }
 }
