@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('professionnels', function (Blueprint $table) {
+        Schema::create('disponibilites', function (Blueprint $table) {
             $table->id();
-            $table->text('description')->nullable();
-            $table->text('registre_commerce');
-            $table->text('ninea');
-            $table->date('jour_ouverture');
-            $table->date('jour_fermeture')->nullable();
+            $table->enum('jour', ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']);
             $table->time('heure_ouverture');
             $table->time('heure_fermeture');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('professionnel_id');
+            $table->foreign('professionnel_id')->references('id')->on('professionnels')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('professionnels');
+        Schema::dropIfExists('disponibilites');
     }
 };

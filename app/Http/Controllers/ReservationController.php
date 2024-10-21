@@ -15,10 +15,17 @@ class ReservationController extends Controller
      * Affiche la liste des réservations.
      */
     public function index(): JsonResponse
-    {
-        $reservations = Reservation::with(['client', 'proprestation'])->get(); // Inclut les relations
-        return response()->json($reservations);
-    }
+{
+    $clientId = Auth::id(); // Récupérer l'ID du client connecté
+
+    $reservations = Reservation::where('client_id', $clientId)
+        ->with(['client', 'proprestation']) // Utilisez les relations correctement définies
+        ->get();
+
+    return response()->json($reservations);
+}
+
+
 
     /**
      * Enregistre une nouvelle réservation.
@@ -50,6 +57,19 @@ class ReservationController extends Controller
 
         return response()->json($reservation, 201);
     }
+
+    /**
+ * Affiche les réservations d'un client spécifique.
+ */
+public function getClientReservations(): JsonResponse
+{
+    $clientId = Auth::id(); // Récupérer l'ID du client connecté
+    $reservations = Reservation::where('client_id', $clientId)
+        ->with(['client', 'proprestation'])
+        ->get(); // Inclut les relations
+
+    return response()->json($reservations);
+}
 
     /**
      * Affiche une réservation spécifique.

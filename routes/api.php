@@ -97,10 +97,14 @@ Route::post('/logout', [AuthController::class, 'logout']);
      Route::get('/commandes/{commande}', [CommandeController::class, "show"]);
 
 //     //ROUTE POUR LES RESERVATIONS
-    Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::get('/reservations/client', [ReservationController::class, 'index']);
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::put('/reservations/{id}', [ReservationController::class, 'update']);
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);
+
+   
+
+
 
     //
     Route::get('/professionnel/prestations/{professionnelId}', [PrestationController::class, 'listePrestationParProf']);
@@ -115,6 +119,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
   });
 
 
+  //Route::middleware('auth:api')->get('/client/reservations', [ReservationController::class, 'getClientReservations']);
 
 
 

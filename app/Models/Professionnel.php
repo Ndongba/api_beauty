@@ -44,6 +44,9 @@ class Professionnel extends Model
         return $this->hasMany(ImageProfessionnel::class, 'professionnel_id');
     }
 
-
+    public function disponibilites()
+    {
+        return $this->hasMany(Disponibilite::class);
+    }
 
 }
