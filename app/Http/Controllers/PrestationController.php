@@ -14,7 +14,10 @@ class PrestationController extends Controller
      */
     public function index()
     {
-        return response()->json(Prestation::all());
+        return response()->json([
+            'message' => 'Liste des prestations',
+            'data' => Prestation::all()
+        ]);
     }
 
     /**
@@ -22,31 +25,18 @@ class PrestationController extends Controller
      */
     public function store(StorePrestationRequest $request)
     {
-        // // Créer une nouvelle prestation avec les données validées
-        // $prestation = Prestation::create($request->validated());
+        $prestationsData = $request->input('prestations');
+        $prestations = [];
 
-        // return response()->json($prestation, 201);
+        foreach ($prestationsData as $prestationData) {
+            $validatedData = $this->validatePrestationData($prestationData);
+            $prestations[] = Prestation::create($validatedData);
+        }
 
-
-
-    // Validation des données
-    // $request->validate([
-    //     'libelle' => 'required|string|max:255',
-    //     'description' => 'required|string', // Correction ici
-    //     'type_prestation' => 'required|string|max:255',
-    //     'type_prix' => 'required|numeric|min:0',
-    //     'categorie_id' => 'required|exists:categories,id',
-    //     'duree' => 'required|date_format:H:i',
-    //     'prix' => 'required|numeric|min:0',
-    // ]);
-
-
-    // Création de la prestation
-    $prestation = Prestation::create($request->all());
-
-    return response()->json($prestation, 201);
-
-
+        return response()->json([
+            'message' => 'Prestations créées avec succès',
+            'data' => $prestations
+        ], 201);
     }
 
     /**
@@ -54,7 +44,10 @@ class PrestationController extends Controller
      */
     public function show(Prestation $prestation)
     {
-        return response()->json($prestation);
+        return response()->json([
+            'message' => 'Détails de la prestation',
+            'data' => $prestation
+        ]);
     }
 
     /**
@@ -62,10 +55,12 @@ class PrestationController extends Controller
      */
     public function update(UpdatePrestationRequest $request, Prestation $prestation)
     {
-        // Mettre à jour la prestation avec les données validées
         $prestation->update($request->validated());
 
-        return response()->json($prestation);
+        return response()->json([
+            'message' => 'Prestation mise à jour avec succès',
+            'data' => $prestation
+        ]);
     }
 
     /**
@@ -75,37 +70,57 @@ class PrestationController extends Controller
     {
         $prestation->delete();
 
-        return response()->json(['message' => 'Prestation deleted successfully']);
+        return response()->json([
+            'message' => 'Prestation supprimée avec succès',
+            'data' => null
+        ]);
     }
 
+    /**
+     * Liste des prestations pour un professionnel donné.
+     */
     public function listePrestationParProf($professionelId)
     {
-        // Vérifier si le professionnel existe
         $professionnel = Professionnel::find($professionelId);
 
         if (!$professionnel) {
             return response()->json([
-                'message' => 'Professionnel non trouvé.',
+                'message' => 'Professionnel non trouvé',
+                'data' => null,
                 'status' => 404
             ]);
         }
 
-        // Récupérer la liste des prestations associées au professionnel via la table pivot
-        $prestations = $professionnel->prestations()->get(); // Utilisez 'prestations' au lieu de 'prestation'
+        $prestations = $professionnel->prestations()->get();
 
-        // Vérifier si des prestations sont trouvées
         if ($prestations->isEmpty()) {
             return response()->json([
-                'message' => 'Aucune prestation associée à ce professionnel.',
+                'message' => 'Aucune prestation associée à ce professionnel',
+                'data' => [],
                 'status' => 404
             ]);
         }
 
         return response()->json([
             'message' => 'Liste des prestations pour le professionnel',
-            'données' => $prestations,
+            'data' => $prestations,
             'status' => 200
         ]);
     }
 
+    /**
+     * Validate prestation data.
+     */
+    private function validatePrestationData(array $prestationData)
+    {
+        return validator($prestationData, [
+            'libelle' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type_prestation' => 'required|string|max:255',
+            'type_prix' => 'required|numeric|min:0',
+            'categorie_id' => 'required|exists:categories,id',
+            'duree' => 'required|date_format:H:i',
+            'prix' => 'required|numeric|min:0',
+        ])->validate();
+    }
 }

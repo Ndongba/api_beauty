@@ -43,6 +43,40 @@ class ProprestationController extends Controller
         //
     }
 
+//     public function getProprestationDetails($proprestationId)
+// {
+//     try {
+//         $proprestation = Proprestation::with(['professionnel', 'prestations'])
+//             ->where('id', $proprestationId)
+//             ->firstOrFail();
+
+//         return response()->json($proprestation, 200);
+//     } catch (\Exception $e) {
+//         return response()->json(['message' => 'Proprestation non trouvée.'], 404);
+//     }
+// }
+
+public function getProprestationDetails($proprestationId)
+{
+    // dd($proprestationId);
+    try {
+        $proprestation = Proprestation::with(['professionnel', 'prestation'])
+            ->where('id', $proprestationId)
+            ->firstOrFail();
+
+
+        return response()->json($proprestation, 200);
+    } catch (\Exception $e) {
+        // Ajout du message d'erreur détaillé
+        return response()->json([
+            'message' => 'Proprestation non trouvée.',
+            'error' => $e->getMessage(),
+            'line' => $e->getLine()
+        ], 404);
+    }
+}
+
+
     /**
      * Show the form for editing the specified resource.
      */

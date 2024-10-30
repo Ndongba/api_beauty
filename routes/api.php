@@ -7,17 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MailBeauteController;
 use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\TemoignageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ImageProduitController;
+use App\Http\Controllers\DisponibiliteController;
+use App\Http\Controllers\ProfessionnelController;
 use App\Http\Controllers\ProprestationController;
 use App\Http\Controllers\ImageProfessionnelController;
-use App\Http\Controllers\ProfessionnelController;
 
  Route::get('/user', function (Request $request) {
      return $request->user();
@@ -33,6 +35,14 @@ Route::get('/roles', [AuthController::class,'index']);
 Route::get('/professionnels', [ProfessionnelController::class, 'index']);
 Route::get('/professionnels/{id}', [ProfessionnelController::class, 'show']);
 Route::apiResource('clients', ClientController::class);
+Route::post('mailbeaute', [MailBeauteController::class, 'index']);
+// Route::apiResource('/disponibilites/professionnel{professionnelId}', DisponibiliteController::class);
+Route::get('/disponibilites/professionnel/{professionnelId}', [DisponibiliteController::class, 'getByProfessionnel']);
+Route::get('professionnels/{id}/images', [ImageProfessionnelController::class, 'getImagesByProfessionnel']);
+Route::get('/proprestations/{id}', [ProprestationController::class, 'getProprestationDetails']);
+
+
+
 
 
 
@@ -101,12 +111,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::put('/reservations/{id}', [ReservationController::class, 'update']);
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy']);
-
-   
-
-
-
-    //
+//
     Route::get('/professionnel/prestations/{professionnelId}', [PrestationController::class, 'listePrestationParProf']);
 
 //     //ROUTE POUR LES TEMOIGNAGES
