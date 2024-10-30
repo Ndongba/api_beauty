@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('date_prévue');
             $table->time('heure_prévue');
             $table->integer('montant');
-            $table->enum('status',['reservé','terminé']);
+            $table->enum('status',['reservée','terminée','annulée']);
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('proprestation_id');

@@ -18,7 +18,7 @@ class ProfessionnelController extends Controller
     {
         // Récupérer tous les utilisateurs ayant le rôle "professionnel"
         $professionnels = User::role('professionnel') // Filtrer par rôle "professionnel"
-                              ->with(['professionnel'])
+                              ->with(['professionnel.images'])
                               ->get();
 
         return response()->json($professionnels);
@@ -46,7 +46,7 @@ class ProfessionnelController extends Controller
       public function show($id)
       {
           // Afficher un professionnel avec ses images
-          $professionnel = Professionnel::findOrFail($id);
+          $professionnel = Professionnel::with('images')->findOrFail($id);
           return response()->json($professionnel);
       }
 

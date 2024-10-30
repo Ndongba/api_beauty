@@ -19,7 +19,7 @@ class ReservationController extends Controller
     $clientId = Auth::id(); // Récupérer l'ID du client connecté
 
     $reservations = Reservation::where('client_id', $clientId)
-        ->with(['client', 'proprestation']) // Utilisez les relations correctement définies
+        ->with(['client', 'proprestation.prestation', 'proprestation.professionnel.user']) // Utilisez les relations correctement définies
         ->get();
 
     return response()->json($reservations);
@@ -123,3 +123,4 @@ public function getClientReservations(): JsonResponse
         return response()->json(['message' => 'Réservation supprimée avec succès']);
     }
 }
+

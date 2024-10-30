@@ -35,6 +35,19 @@ class ImageProfessionnelController extends Controller
         return response()->json(['error' => 'Aucune image uploadée.'], 400);
     }
 
+    public function getImagesByProfessionnel($professionnel_id)
+{
+    // Récupérer toutes les images du professionnel via l'ID
+    $images = ImageProfessionnel::where('professionnel_id', $professionnel_id)->get();
+
+    // Si aucune image n'est trouvée, renvoyer une réponse avec un message d'erreur
+    if ($images->isEmpty()) {
+        return response()->json(['message' => 'Aucune image trouvée pour ce professionnel.'], 404);
+    }
+
+    return response()->json($images, 200);
+}
+
     public function show($id)
     {
         return ImageProfessionnel::findOrFail($id);
