@@ -114,13 +114,23 @@ public function getClientReservations(): JsonResponse
 
 
     /**
-     * Supprime une réservation.
+     * Annulée une réservation.
      */
     public function destroy(Reservation $reservation): JsonResponse
     {
-        $reservation->delete();
+        // Vérifier si la réservation est déjà annulée
+        if ($reservation->status === 'annulé') {
+            return response()->json(['message' => 'Cette réservation est déjà annulée.'], 400);
+        }
 
-        return response()->json(['message' => 'Réservation supprimée avec succès']);
+        // Mettre à jour le statut de la réservation à "annulé"
+        $reservation->status = "annulé"; // Utilisez des guillemets doubles ici
+        $reservation->save();
+
+        return response()->json(['message' => 'Réservation annulée avec succès']);
     }
+
+
+
 }
 
