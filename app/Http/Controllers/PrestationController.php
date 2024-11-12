@@ -25,19 +25,22 @@ class PrestationController extends Controller
      */
     public function store(StorePrestationRequest $request)
     {
-        $prestationsData = $request->input('prestations');
-        $prestations = [];
+        try {
+            $prestation = Prestation::create($request->only(['libelle', 'type_prestation', 'description','categorie_id','duree','type_prix','prix']));
 
-        foreach ($prestationsData as $prestationData) {
-            $validatedData = $this->validatePrestationData($prestationData);
-            $prestations[] = Prestation::create($validatedData);
+            return response()->json([
+                'message' => 'Prestation créée avec succès',
+                'data' => $prestation
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la création de la prestation',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'message' => 'Prestations créées avec succès',
-            'data' => $prestations
-        ], 201);
     }
+
+
 
     /**
      * Display the specified resource.
