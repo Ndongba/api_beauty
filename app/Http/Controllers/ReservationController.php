@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Proprestation;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
@@ -67,6 +68,23 @@ public function getClientReservations(): JsonResponse
     $reservations = Reservation::where('client_id', $clientId)
         ->with(['client', 'proprestation'])
         ->get(); // Inclut les relations
+
+    return response()->json($reservations);
+}
+
+/**
+ * Affiche les resrvations d'un professionnel specifique
+ */
+
+ public function getReservationsByProfessionnel(): JsonResponse
+{
+    $professionnelId = Auth::id(); // ID du professionnel connecté
+
+    $reservations = DB::table('reservations')
+        ->join('proprestations', 'reservations.proprestation_id', '=', 'proprestations.id')
+        ->where('proprestations.professionnel_id', $professionnelId)
+        ->select('reservations.*')  // Sélectionnez les colonnes de la table reservations
+        ->get();
 
     return response()->json($reservations);
 }

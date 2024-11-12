@@ -39,7 +39,10 @@ class Proprestation extends Model
     /**
      * Relation many-to-many avec Client via Reservation.
      */
-
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'proprestation_id');
+    }
 }
 
 

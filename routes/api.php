@@ -77,6 +77,9 @@ Route::middleware(['auth:api'])-> group(function(){
     Route::put('/prestations/{id}', [PrestationController::class, "update"]);
     Route::delete('/prestations/{id}', [PrestationController::class, "destroy"]);
 
+    //ROUTE POUR LES PROFESSIONNELS
+    Route::get('/reservations/professionnel', [ReservationController::class, "getReservationsByProfessionnel"]);
+
     //ROUTE POUR PRODUITS
     Route::get('/produits', [ProduitController::class, "index"]);
     Route::post('/produits', [ProduitController::class, "store"]);
