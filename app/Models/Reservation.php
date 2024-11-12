@@ -30,6 +30,9 @@ class Reservation extends Pivot
     {
         return $this->belongsTo(Proprestation::class, 'proprestation_id');
     }
+
+   
+
 }
 
 
