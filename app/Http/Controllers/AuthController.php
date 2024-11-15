@@ -24,20 +24,20 @@ class AuthController extends Controller
 
         // Validation des données
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'registre_commerce' => 'required_if:role,professionnel|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'ninea' => 'required_if:role,professionnel|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'telephone' => ['required', 'integer'],
-            'adresse' => ['required', 'string', 'max:255'],
-            'role' => 'required|string|in:admin,client,professionnel',
-            'images' => 'required_if:role,professionnel|array|max:3',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-             'disponibilites' => 'required_if:role,professionnel|array',
-            'disponibilites.*.jour' => 'required_if:role,professionnel|string|in:lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche',
-            'disponibilites.*.heure_ouverture' => 'required_if:role,professionnel|date_format:H:i',
-            'disponibilites.*.heure_fermeture' => 'required_if:role,professionnel|date_format:H:i',
+            //  'name' => ['required', 'string', 'max:255'],
+            //  'password' => ['required', 'string', 'max:255'],
+            //  'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            //  'registre_commerce' => 'required_if:role,professionnel|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            //  'ninea' => 'required_if:role,professionnel|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            //  'telephone' => ['required', 'regex:/^\+?[1-9]\d{1,10}$/'],
+            //  'adresse' => ['required', 'string', 'max:255'],
+            //  'role' => 'required|string|in:admin,client,professionnel',
+            //  'images' => 'required_if:role,professionnel|array|max:3',
+            //  'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            //  'disponibilites' => 'required_if:role,professionnel|array',
+            //  'disponibilites.*.jour' => 'required_if:role,professionnel|string|in:lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche',
+            //  'disponibilites.*.heure_ouverture' => 'required_if:role,professionnel|date_format:H:i',
+            //  'disponibilites.*.heure_fermeture' => 'required_if:role,professionnel|date_format:H:i',
 
         ]);
 

@@ -22,6 +22,7 @@ class Reservation extends Pivot
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
+ 
 
     /**
      * Relation : La réservation est liée à une prestation.
@@ -31,7 +32,7 @@ class Reservation extends Pivot
         return $this->belongsTo(Proprestation::class, 'proprestation_id');
     }
 
-   
+
 
 }
 

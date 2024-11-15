@@ -40,7 +40,7 @@ Route::post('mailbeaute', [MailBeauteController::class, 'index']);
 Route::get('/disponibilites/professionnel/{professionnelId}', [DisponibiliteController::class, 'getByProfessionnel']);
 Route::get('professionnels/{id}/images', [ImageProfessionnelController::class, 'getImagesByProfessionnel']);
 Route::get('/proprestations/{id}', [ProprestationController::class, 'getProprestationDetails']);
-
+Route::get('/reservations/client', [ReservationController::class, 'index']);
 
 
 
@@ -79,6 +79,9 @@ Route::middleware(['auth:api'])-> group(function(){
 
     //ROUTE POUR LES PROFESSIONNELS
     Route::get('/reservations/professionnel', [ReservationController::class, "getReservationsByProfessionnel"]);
+    Route::get('/reservations/client', [ReservationController::class, 'index']);
+    Route::get('/reservations/clientpro', [ReservationController::class,'getClientsPros']);
+    Route::get('/reservations/client', [ReservationController::class, 'index']);
 
     //ROUTE POUR PRODUITS
     Route::get('/produits', [ProduitController::class, "index"]);
@@ -127,7 +130,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
   });
 
 
-  //Route::middleware('auth:api')->get('/client/reservations', [ReservationController::class, 'getClientReservations']);
+
 
 
 
