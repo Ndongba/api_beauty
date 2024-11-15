@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Proprestation;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -62,31 +63,80 @@ class ReservationController extends Controller
     /**
  * Affiche les réservations d'un client spécifique.
  */
-public function getClientReservations(): JsonResponse
+// public function getClientReservations(): JsonResponse
+// {
+//     $clientId = Auth::id(); // Récupérer l'ID du client connecté
+//     $reservations = Reservation::where('client_id', $clientId)
+//         ->with(['client', 'proprestation'])
+//         ->get(); // Inclut les relations
+
+//     return response()->json($reservations);
+// }
+
+/**
+ * Affiche les reservations d'un professionnel specifique
+ */
+
+ public function getReservationsByProfessionnel(): JsonResponse
 {
-    $clientId = Auth::id(); // Récupérer l'ID du client connecté
-    $reservations = Reservation::where('client_id', $clientId)
-        ->with(['client', 'proprestation'])
-        ->get(); // Inclut les relations
+    // Récupérer l'ID de l'utilisateur connecté
+    $userId = Auth::id();
+
+    // Trouver le professionnel lié à cet utilisateur
+    $professionnel = User::find($userId)->professionnel;
+
+    // S'assurer que l'utilisateur connecté est bien un professionnel
+    if (!$professionnel) {
+        return response()->json(['message' => 'Professionnel non trouvé'], 404);
+    }
+
+    // Récupérer les réservations liées au professionnel via les prestations
+    $reservations = $professionnel->proprestation()
+        ->with([
+            'reservations' => function ($query) {
+                // Sélectionner uniquement les champs nécessaires dans la table `reservations`
+                $query->select('id', 'proprestation_id', 'date_prévue', 'heure_prévue', 'montant', 'status', 'client_id');
+            },
+            'reservations.client.user:id,name,email',
+            'prestation:id,libelle' // Charger le libelle de la prestation
+        ])
+        ->get()
+        ->pluck('reservations')
+        ->flatten() // Aplatit les résultats pour éviter une structure imbriquée
+        ->map(function ($reservation) {
+            // Structurer les données en ne gardant que les champs requis
+            return [
+                'date_prévue' => $reservation->date_prévue,
+                'heure_prévue' => $reservation->heure_prévue,
+                'montant' => $reservation->montant,
+                'status' => $reservation->status,
+                'client_nom' => $reservation->client->user->name ?? null,
+                'client_email' => $reservation->client->user->email ?? null,
+                'client_phone' => $reservation->client->telephone ?? null,
+                'prestation_libelle' => $reservation->proprestation->prestation->libelle ?? null,
+            ];
+        });
 
     return response()->json($reservations);
 }
 
 /**
- * Affiche les resrvations d'un professionnel specifique
+ * Affiche la liste des clients par Professionnel
  */
 
- public function getReservationsByProfessionnel(): JsonResponse
+public function getClientsPros(): JsonResponse
 {
-    $professionnelId = Auth::id(); // ID du professionnel connecté
+    $professionnelId = Auth::id();
 
-    $reservations = DB::table('reservations')
+    $clients = DB::table('users')
+        ->join('reservations', 'users.id', '=', 'reservations.client_id')
         ->join('proprestations', 'reservations.proprestation_id', '=', 'proprestations.id')
         ->where('proprestations.professionnel_id', $professionnelId)
-        ->select('reservations.*')  // Sélectionnez les colonnes de la table reservations
+        ->select('users.*')  // Sélectionne les colonnes de la table users
+        ->distinct()         // Évite les doublons de clients
         ->get();
 
-    return response()->json($reservations);
+    return response()->json($clients);
 }
 
     /**
