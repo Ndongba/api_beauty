@@ -126,4 +126,22 @@ class PrestationController extends Controller
             'prix' => 'required|numeric|min:0',
         ])->validate();
     }
+
+    public function getPopularPrestations()
+    {
+        // Logique pour récupérer les prestations populaires
+        $currentMonth = now()->month;
+        $lastMonth = now()->subMonth()->month;
+
+        $prestations = Prestation::withCount([
+            'reservations as current_month' => function ($query) use ($currentMonth) {
+                $query->whereMonth('date_prévue', $currentMonth);
+            },
+            'reservations as last_month' => function ($query) use ($lastMonth) {
+                $query->whereMonth('date_prévue', $lastMonth);
+            },
+        ])->get();
+
+        return response()->json($prestations);
+    }
 }

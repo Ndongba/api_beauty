@@ -70,12 +70,15 @@ Route::middleware(['auth:api'])-> group(function(){
      Route::get('/professionnel/dashboard', [PrestationController::class, 'dashboard']);
      Route::post('/prestations/create', [PrestationController::class, 'store']);
      Route::apiResource('proprestations', ProprestationController::class);
+     Route::post('/logout', [AuthController::class, 'logout']);
      //ROUTE POUR LES PRESTATIONS
     Route::get('/prestations', [PrestationController::class, "index"]);
     Route::post('/prestations', [PrestationController::class, "store"]);
     Route::get('/prestations/{prestation}', [PrestationController::class, "show"]);
     Route::put('/prestations/{id}', [PrestationController::class, "update"]);
     Route::delete('/prestations/{id}', [PrestationController::class, "destroy"]);
+    Route::get('/prestations/populaires', [PrestationController::class, 'getPopularPrestations']);
+
 
     //ROUTE POUR LES PROFESSIONNELS
     Route::get('/reservations/professionnel', [ReservationController::class, "getReservationsByProfessionnel"]);
@@ -98,7 +101,7 @@ Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy']
 //ROUTE POUR UPLOAD IMAGES
 Route::apiResource('images-produits', ImageProduitController::class);
 Route::apiResource('images-professionnels', ImageProfessionnelController::class);
-Route::post('/logout', [AuthController::class, 'logout']);
+
 
  });
 
