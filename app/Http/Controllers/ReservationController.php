@@ -113,6 +113,7 @@ class ReservationController extends Controller
                 'client_nom' => $reservation->client->user->name ?? null,
                 'client_email' => $reservation->client->user->email ?? null,
                 'client_phone' => $reservation->client->telephone ?? null,
+                'client_adresse' => $reservation->client->adresse ?? null,
                 'prestation_libelle' => $reservation->proprestation->prestation->libelle ?? null,
             ];
         });
